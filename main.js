@@ -72,7 +72,8 @@
         const saved = readJSON(SETTINGS_KEY) || LEGACY_SETTINGS_KEYS.map(readJSON).find(Boolean) || {};
         return {
             enabled: saved.enabled === true,
-            competitionMode: saved.competitionMode === true,
+            // Default to competition mode ON; preserve an explicit saved OFF choice.
+            competitionMode: saved.competitionMode !== false,
             practiceSeconds: clampInteger(saved.practiceSeconds, 0, MAX_PRACTICE_SECONDS),
             leaderboardEnabled: saved.leaderboardEnabled !== false,
             leaderboardAccountName: typeof saved.leaderboardAccountName === "string"
