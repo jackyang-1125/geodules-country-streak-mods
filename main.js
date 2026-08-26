@@ -1754,19 +1754,17 @@
         if (button.dataset.gdCountryStreakFifthNext !== "true") {
             button.dataset.gdCountryStreakFifthNext = "true";
             button.addEventListener("click", (event) => {
-                if (state.lastLoss && !gameOverRevealRequested) {
+                // Correct guesses must use the official button's native action.
+                // Only a confirmed loss changes the action to Game Over.
+                if (!state.lastLoss) return;
+                if (!gameOverRevealRequested) {
                     event.preventDefault();
                     event.stopPropagation();
                     event.stopImmediatePropagation();
                     gameOverRevealRequested = true;
                     hideNativeFailureLayersAndControls();
                     renderGameOverOverlay();
-                    return;
                 }
-                event.preventDefault();
-                event.stopPropagation();
-                event.stopImmediatePropagation();
-                void startFreshSingleplayer(button);
             }, true);
         }
         return true;
